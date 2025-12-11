@@ -9,7 +9,7 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Notification Service API",
-    description="Microservice for sending notifications (emails, etc.)",
+    description="Microservice for sending notifications (emails, etc.) working Online!",
     version="1.0.0",
     docs_url="/api/docs",
     redoc_url="/api/redoc"
