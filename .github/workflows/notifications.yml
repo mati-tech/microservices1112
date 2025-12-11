@@ -1,0 +1,110 @@
+# name: Notifications Service CI/CD
+
+# on:
+#   push:
+#     branches: [main]
+#     paths:
+#       - 'notifications/**'  # Triggers ONLY when this service changes
+#   pull_request:
+#     branches: [main]
+#     paths:
+#       - 'notifications/**'
+
+# jobs:
+#   # Service 2: Notifications (Yandex Cloud)
+#   build-and-deploy-notifications:
+#     runs-on: ubuntu-latest
+    
+#     steps:
+#     - name: Checkout code
+#       uses: actions/checkout@v4
+    
+#     - name: Set up Python
+#       uses: actions/setup-python@v4
+#       with:
+#         python-version: '3.11'
+    
+#     - name: Test Notifications Service
+#       run: |
+#         cd notifications
+#         pip install -r requirements.txt
+#         python -m pytest tests/ || echo "No tests found"
+    
+#     - name: Build Docker image
+#       run: |
+#         cd notifications
+#         docker build -t cr.yandex/${{ secrets.YC_REGISTRY_ID }}/notifications:${{ github.sha }} .
+    
+#     - name: Login to Yandex Registry
+#       run: |
+#         echo '${{ secrets.YC_KEYS }}' > key.json
+#         cat key.json | docker login --username json_key --password-stdin cr.yandex
+    
+#     - name: Push to Yandex Registry
+#       run: |
+#         docker push cr.yandex/${{ secrets.YC_REGISTRY_ID }}/notifications:${{ github.sha }}
+    
+#     - name: Deploy to Yandex Serverless Container
+#       uses: yc-actions/yc-sls-container-deploy@v1
+#       with:
+#         yc-sa-json-credentials: ${{ secrets.YC_KEYS }}
+#         container-name: ${{ secrets.YC_CONTAINER_NAME }}
+#         folder-id: ${{ secrets.YC_FOLDER_ID }}
+#         revision-image-url: cr.yandex/${{ secrets.YC_REGISTRY_ID }}/notifications:${{ github.sha }}
+#         revision-service-account-id: ${{ secrets.YC_SA_ID }}
+#         revision-memory: 256M
+#         revision-cores: 0.5
+#         revision-execution-timeout: 30s
+#         revision-env: |
+#           DATABASE_URL=${{ secrets.NOTIFICATIONS_DB_URL }}
+#           NOTIFICATIONS_PORT=8080
+#           PYTHONPATH=/app
+
+
+name: Notifications Service CI/CD (Yandex Cloud)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'notifications/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'notifications/**'
+
+jobs:
+  build-and-deploy-to-yandex:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Build Docker image
+      run: |
+        cd notifications
+        docker build -t cr.yandex/${{ secrets.YC_REGISTRY_ID }}/notifications:${{ github.sha }} .
+    
+    - name: Login to Yandex Registry
+      run: |
+        echo '${{ secrets.YC_KEYS }}' > key.json
+        cat key.json | docker login --username json_key --password-stdin cr.yandex
+    
+    - name: Push to Yandex Registry
+      run: |
+        docker push cr.yandex/${{ secrets.YC_REGISTRY_ID }}/notifications:${{ github.sha }}
+    
+    - name: Deploy to Yandex Serverless Container
+      uses: yc-actions/yc-sls-container-deploy@v1
+      with:
+        yc-sa-json-credentials: ${{ secrets.YC_KEYS }}
+        container-name: ${{ secrets.YC_CONTAINER_NAME }}
+        folder-id: ${{ secrets.YC_FOLDER_ID }}
+        revision-image-url: cr.yandex/${{ secrets.YC_REGISTRY_ID }}/notifications:${{ github.sha }}
+        revision-service-account-id: ${{ secrets.YC_SA_ID }}
+        revision-memory: 256M
+        revision-cores: 1
+        revision-env: |
+          DATABASE_URL=${{ secrets.NOTIFICATIONS_DB_URL }}
+          PORT=8080
