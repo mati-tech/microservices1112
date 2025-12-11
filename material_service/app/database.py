@@ -32,7 +32,7 @@ load_dotenv()
 # Use DATABASE_URL from environment, fallback to default
 DATABASE_URL = os.getenv(
     "DATABASE_URL", 
-    "postgresql://material_user:material_password123@postgres:5432/material_db"
+    "postgresql://neondb_owner:npg_H8McLqjXbiD9@ep-silent-glitter-a4i8oit5-pooler.us-east-1.aws.neon.tech/material_db?sslmode=require&channel_binding=require"
 )
 
 engine = create_engine(DATABASE_URL)
