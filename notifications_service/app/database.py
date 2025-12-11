@@ -23,4 +23,4 @@ def get_db():
     finally:
         db.close()
         
-#to trigger the file and also 
+#to trigger the file and also  

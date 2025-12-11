@@ -170,7 +170,7 @@ jobs:
         folder-id: ${{ secrets.YC_FOLDER_ID }}
         revision-image-url: cr.yandex/${{ secrets.YC_REGISTRY_ID }}/notifications:${{ github.sha }}  # Согласовали с именем образа
         revision-service-account-id: ${{ secrets.YC_SA_ID }}
-        revision-memory: 256M  # Параметры ресурсов
+        revision-memory: 256Mb  # Параметры ресурсов
         revision-cores: 0.5
         revision-execution-timeout: 30s
         revision-env: |
