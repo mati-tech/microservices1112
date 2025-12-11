@@ -140,16 +140,38 @@ jobs:
       run: |
         docker push cr.yandex/${{ secrets.YC_REGISTRY_ID }}/notifications:${{ github.sha }}
     
+    # - name: Deploy to Yandex Serverless Container
+    #   uses: yc-actions/yc-sls-container-deploy@v1
+    #   with:
+    #     yc-sa-json-credentials: ${{ secrets.YC_KEYS }}
+    #     container-name: ${{ secrets.YC_CONTAINER_NAME }}
+    #     folder-id: ${{ secrets.YC_FOLDER_ID }}
+    #     revision-image-url: cr.yandex/${{ secrets.YC_REGISTRY_ID }}/notifications:${{ github.sha }}
+    #     revision-service-account-id: ${{ secrets.YC_SA_ID }}
+    #     revision-env: |
+    #       DATABASE_URL=${{ secrets.NOTIFICATIONS_DB_URL }}
+          
+    # - name: Deploy to Yandex Serverless Container
+    #   uses: yc-actions/yc-sls-container-deploy@v1
+    #   with:
+    #     yc-service-account-key: ${{ secrets.YC_KEYS }}
+    #     folder-id: ${{ secrets.YC_FOLDER_ID }}
+    #     container-name: ${{ secrets.YC_CONTAINER_NAME }}
+    #   revision-image-url: cr.yandex/${{ secrets.YC_REGISTRY_ID }}/notifications:${{ github.sha }}
+    #    revision-service-account-id: ${{ secrets.YC_SA_ID }}
+    #     revision-env: |
+    #         DATABASE_URL=${{ secrets.NOTIFICATIONS_DB_URL }}
+
     - name: Deploy to Yandex Serverless Container
       uses: yc-actions/yc-sls-container-deploy@v1
       with:
-        yc-sa-json-credentials: ${{ secrets.YC_KEYS }}
+        yc-sa-json-credentials: ${{ secrets.YC_KEYS }}  # Обновлённый параметр
         container-name: ${{ secrets.YC_CONTAINER_NAME }}
         folder-id: ${{ secrets.YC_FOLDER_ID }}
-        revision-image-url: cr.yandex/${{ secrets.YC_REGISTRY_ID }}/notifications:${{ github.sha }}
+        revision-image-url: cr.yandex/${{ secrets.YC_REGISTRY_ID }}/notifications:${{ github.sha }}  # Согласовали с именем образа
         revision-service-account-id: ${{ secrets.YC_SA_ID }}
+        revision-memory: 256M  # Параметры ресурсов
+        revision-cores: 0.5
+        revision-execution-timeout: 30s
         revision-env: |
           DATABASE_URL=${{ secrets.NOTIFICATIONS_DB_URL }}
-          
-
-          #redo
