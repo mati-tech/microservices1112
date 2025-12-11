@@ -42,3 +42,4 @@ def root():
             "notifications": "/notifications"
         }
     }
+
