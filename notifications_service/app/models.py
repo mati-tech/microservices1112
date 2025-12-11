@@ -14,7 +14,7 @@ class NotificationStatus(str, PyEnum):
     FAILED = "failed"
 
 class Notification(Base):
-    __tablename__ = "notifications"
+    __tablename__ = "notify_db"
     
     id = Column(Integer, primary_key=True, index=True)
     recipient_email = Column(String(255), nullable=False, index=True)

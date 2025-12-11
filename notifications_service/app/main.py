@@ -5,7 +5,7 @@ from .database import engine
 from . import models
 
 # Create tables
-# models.Base.metadata.create_all(bind=engine)
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Notification Service API",

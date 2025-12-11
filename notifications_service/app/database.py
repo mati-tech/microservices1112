@@ -9,7 +9,7 @@ load_dotenv()
 
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    f"postgresql://{os.getenv('DATABASE_USER')}:{os.getenv('DATABASE_PASSWORD')}@{os.getenv('DATABASE_HOST')}:{os.getenv('DATABASE_PORT')}/{os.getenv('DATABASE_NAME')}"
+    "postgresql://neondb_owner:npg_H8McLqjXbiD9@ep-silent-glitter-a4i8oit5-pooler.us-east-1.aws.neon.tech/notify_db?sslmode=require&channel_binding=require"
 )
 
 engine = create_engine(DATABASE_URL)
