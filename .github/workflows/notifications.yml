@@ -148,7 +148,7 @@ jobs:
         folder-id: ${{ secrets.YC_FOLDER_ID }}
         revision-image-url: cr.yandex/${{ secrets.YC_REGISTRY_ID }}/notifications:${{ github.sha }}
         revision-service-account-id: ${{ secrets.YC_SA_ID }}
-        revision-memory: 256M
+        revision-memory: 256Mb
         revision-cores: 1
         revision-env: |
           DATABASE_URL=${{ secrets.NOTIFICATIONS_DB_URL }}
