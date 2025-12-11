@@ -150,6 +150,6 @@ jobs:
         revision-service-account-id: ${{ secrets.YC_SA_ID }}
         revision-env: |
           DATABASE_URL=${{ secrets.NOTIFICATIONS_DB_URL }}
-          PORT=8080
+          
 
           #redo
