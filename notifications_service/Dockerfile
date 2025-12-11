@@ -10,4 +10,4 @@ COPY . .
 RUN useradd -m -u 1000 fastapi && chown -R fastapi:fastapi /app
 USER fastapi
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
