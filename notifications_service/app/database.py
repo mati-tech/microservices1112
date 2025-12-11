@@ -12,7 +12,7 @@ DATABASE_URL = os.getenv(
     "postgresql://neondb_owner:npg_H8McLqjXbiD9@ep-silent-glitter-a4i8oit5-pooler.us-east-1.aws.neon.tech/notify_db?sslmode=require&channel_binding=require"
 )
 
-engine = create_engine(DATABASE_URL)
+engine = create_engine(DATABASE_URL) 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
