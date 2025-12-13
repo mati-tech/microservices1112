@@ -93,6 +93,8 @@ class TestMaterialsService:
             }
         )
         
+        
+        
         # Тогда
         material = Material.model_validate(response.json())
         

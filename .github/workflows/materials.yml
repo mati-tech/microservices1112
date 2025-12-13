@@ -153,10 +153,10 @@ on:
     branches: [main]
     paths:
       - 'material_service/**'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'material_service/**'
+  # pull_request:
+  #   branches: [main]
+  #   paths:
+  #     - 'material_service/**'
 
 jobs:
   build-and-push-to-dockerhub:
@@ -174,7 +174,7 @@ jobs:
         pip install pytest
         # Run tests
         python -m pytest tests/ -v
-    # ↑↑↑ THAT'S IT ↑↑↑
+
     
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
